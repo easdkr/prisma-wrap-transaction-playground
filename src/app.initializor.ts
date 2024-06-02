@@ -6,7 +6,6 @@ import {
 import { Reflector } from '@nestjs/core';
 
 export function initializeApplication(app: INestApplication): void {
-  app.enableShutdownHooks();
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
