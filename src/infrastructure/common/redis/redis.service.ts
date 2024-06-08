@@ -7,10 +7,12 @@ import {
 } from '@nestjs/common';
 import { REDIS_CONFIGURATION_TOKEN, RedisConfigurations } from './redis.conf';
 import { Redis } from 'ioredis';
+import Redlock from 'redlock';
 
 @Injectable()
 export class RedisService implements OnModuleInit, OnModuleDestroy {
   #redisClient: Redis;
+  #lock: Redlock;
 
   public constructor(
     @Inject(REDIS_CONFIGURATION_TOKEN)
@@ -23,6 +25,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
       password: this.redisConfig.password,
       db: this.redisConfig.db,
     });
+    this.#lock = new Redlock([this.#redisClient]);
   }
 
   public async onModuleDestroy() {
@@ -35,5 +38,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
 
   public get client(): Redis {
     return this.#redisClient;
+  }
+
+  public get lock(): Redlock {
+    return this.#lock;
   }
 }
