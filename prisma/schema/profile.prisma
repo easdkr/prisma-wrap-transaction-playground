@@ -1,0 +1,11 @@
+
+model Profile {
+  id        Int   @id @default(autoincrement())
+  userId    Int    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  bio       String?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? 
+}
