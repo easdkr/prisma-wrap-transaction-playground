@@ -8,4 +8,6 @@ model User {
   updatedAt DateTime @updatedAt
   deletedAt DateTime? 
   profile   Profile?
+  posts     Post[]
+  postViews PostView[]
 }

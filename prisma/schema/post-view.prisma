@@ -1,0 +1,11 @@
+model PostView {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  viewer    User     @relation(fields: [viewerId], references: [id])
+  viewerId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([postId])
+  @@index([viewerId])
+}
